@@ -1,0 +1,212 @@
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Preview Image Before Upload | CodingNepal</title>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   </head>
+   <style>
+       @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    html,body{
+      display: grid;
+      height: 100%;
+      place-items: center;
+      text-align: center;
+    }
+    .container{
+      height: 350px;
+      width: 430px;
+      position: relative;
+    }
+    .container .wrapper{
+      position: relative;
+      height: 300px;
+      width: 100%;
+      border-radius: 10px;
+      background: #fff;
+      border: 2px dashed #c2cdda;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .wrapper.active{
+      border: none;
+    }
+    .wrapper .image{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wrapper img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+    .wrapper .icon{
+      font-size: 100px;
+      color: #630519;
+    }
+    .wrapper .text{
+      font-size: 20px;
+      font-weight: 500;
+      color: #5B5B7B;
+    }
+    .wrapper #cancel-btn i{
+      position: absolute;
+      font-size: 20px;
+      right: 15px;
+      top: 15px;
+      color: #9658fe;
+      cursor: pointer;
+      display: none;
+    }
+    .wrapper.active:hover #cancel-btn i{
+      display: block;
+    }
+    .wrapper #cancel-btn i:hover{
+      color: #e74c3c;
+    }
+    .wrapper .file-name{
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      padding: 8px 0;
+      font-size: 18px;
+      color: #fff;
+      display: none;
+      background: linear-gradient(135deg,#3afeee 0%,#9658fe 100%);
+    }
+    .wrapper.active:hover .file-name{
+    display: block;
+    }
+    .container #custom-btn{
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      height: 50px;
+      border: none;
+      outline: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg,#630519 0%,#00a3cc 100%);
+    }
+    .container #custom-submit-btn{
+      margin-top: 30px;
+      display: block;
+      width: 100%;
+      height: 50px;
+      border: none;
+      outline: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg,#630519 0%,#00a3cc 100%);
+    }
+ </style>
+   <body style="background-color: #e9ecef;padding-bottom: 200px;">
+    <div class="jumbotron">
+        <h1 class="display-5">Extract Tables from Images</h1>
+        <p class="lead">This simple application will allow to extract tables from the provided images</p>
+        <hr class="my-4">
+        <p>
+            <b>How to use:</b>
+            Select the image you want to extract tables from.<br>
+            After processing you will get a zip file. It would contain the images of the extracted tables as well as the csv files containing extracted text.   
+        </p>
+      </div>
+      <div class="container">
+         <div class="wrapper">
+            <div class="image">
+               <img src="" alt="">
+            </div>
+            <div class="content">
+               <div class="icon">
+                  <i class="fas fa-cloud-upload-alt"></i>
+               </div>
+               <div class="text">
+                  No file chosen, yet!
+               </div>
+            </div>
+            <div id="cancel-btn">
+               <i class="fas fa-times"></i>
+            </div>
+            <div class="file-name">
+               File name here
+            </div>
+         </div>
+         <form action = "{{base_url}}upload" method = "POST" enctype = "multipart/form-data" id="main_form">  
+            <input id="main_file" name="file" type="file" hidden>
+        </form> 
+
+            <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>
+            <input id="default-btn" type="file" hidden>
+            <button id="custom-submit-btn" class="file_btn" onclick="upload()">Upload</button>
+
+      </div>
+      <br>
+      <br>
+      <script>
+
+        function upload(){
+            document.getElementById("main_form").submit();
+        }
+
+         const wrapper = document.querySelector(".wrapper");
+         const fileName = document.querySelector(".file-name");
+         const defaultBtn = document.querySelector("#default-btn");
+         const customBtn = document.querySelector("#custom-btn");
+         const cancelBtn = document.querySelector("#cancel-btn i");
+         const img = document.querySelector("img");
+         let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+         function defaultBtnActive(){
+           defaultBtn.click();
+         }
+         defaultBtn.addEventListener("change", function(){
+           const file = this.files[0];
+
+           document.getElementById("main_file").files = this.files;
+           if(file){
+             const reader = new FileReader();
+             reader.onload = function(){
+               const result = reader.result;
+               img.src = result;
+               wrapper.classList.add("active");
+             }
+             cancelBtn.addEventListener("click", function(){
+               img.src = "";
+               wrapper.classList.remove("active");
+             })
+             reader.readAsDataURL(file);
+           }
+           if(this.value){
+             let valueStore = this.value.match(regExp);
+             fileName.textContent = valueStore;
+           }
+         });
+      </script>
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   </body>
+</html>
