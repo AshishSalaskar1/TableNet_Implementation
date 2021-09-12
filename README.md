@@ -7,9 +7,8 @@ You can find a demo of the model here : https://youtu.be/wvREr71zPe4
 The task here is of extracting tables from the image as a two-step process. First, we train a model which will try to detect the table regions i.e area of the image which contains a table. Once table regions are found, another model would then Recognize the structure of the table. We can split the process into two steps
 1) Table Detection (Detect Table region)
 2) Table Structure Segmentation ( Detect the rows and columns in the detected table)
-In our work here, we will try to create a unified architecture TableNet which performs both Table detection and structure segmentation as a single task. Using this model we will be able to train an end-to-end model which when given an input image will be able to predict the tables as well as extract information from the detected tables. Once we get the Table structure and Table design we can extract the text using Tesseract OCR
-We base our work on the following Research paper :<br>
-TableNet: Deep Learning model for end-to-end Table detection and Tabular data extraction from Scanned Document Images
+
+In our model we try to integrate both these steps into a single end-to-end trainable Deep Learning model.
 
 
 ## Dataset
