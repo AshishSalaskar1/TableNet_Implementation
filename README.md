@@ -1,7 +1,7 @@
 # TableNet: end-to-end Table detection and Tabular data extraction from Scanned Document Images
-Tensorflow Implementation of the Tablenet research Paper. 
-Blog Link : https://ashishsalaskar1.medium.com/tablenet-end-to-end-table-detection-and-tabular-data-extraction-from-scanned-document-images-13c846e8f8f5
-You can find a demo of the model here : https://youtu.be/wvREr71zPe4
+Tensorflow Implementation of the Tablenet research Paper. <br>
+Blog Link : https://ashishsalaskar1.medium.com/tablenet-end-to-end-table-detection-and-tabular-data-extraction-from-scanned-document-images-13c846e8f8f5 <Br>
+You can find a demo of the model here : https://youtu.be/wvREr71zPe4 <br>
 
 ## Introduction
 The task here is of extracting tables from the image as a two-step process. First, we train a model which will try to detect the table regions i.e area of the image which contains a table. Once table regions are found, another model would then Recognize the structure of the table. We can split the process into two steps
